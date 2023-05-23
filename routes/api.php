@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsuariosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 * ====     USUARIOS     ====
 * ==========================
 */
-
+Route::prefix('/users')->group(function(){
+    Route::post('/create',[UsuariosController::class,'createUsuarios']); 
+    Route::get('/list',[UsuariosController::class,'listUsuarios']);
+});

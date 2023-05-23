@@ -25,8 +25,8 @@ class UsuariosController extends Controller
             'password'=>$password,
             'isAdmin'=>$isAdmin
         ]);
-
         return response($createdUsuario, 201);
+    }
 
         function listUsuarios(Request $request){
             $listedUsuarios = Usuarios::all();
@@ -39,5 +39,5 @@ class UsuariosController extends Controller
         // 'username',
         // 'password',
         // 'permiso'
-    }
+    
 }
