@@ -36,7 +36,7 @@ class UsuariosController extends Controller
     }
 
     public function destroyUsuarios($id){
-        $user = User::find($id);
+        $user = Usuarios::find($id);
 
         if(!$user){
             return response('Usuario no encontrado');
