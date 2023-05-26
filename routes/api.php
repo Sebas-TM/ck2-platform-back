@@ -27,6 +27,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('/users')->group(function(){
     Route::post('/create',[UsuariosController::class,'createUsuarios']); 
     Route::get('/list',[UsuariosController::class,'listUsuarios']);
+    Route::get('/list/{id}',[UsuariosController::class,'listUsuario']);
+    Route::post('/update/{id}',[UsuariosController::class,'updateUsuario']);
     Route::delete('/delete/{id}',[UsuariosController::class,'destroyUsuarios']);
 });
 

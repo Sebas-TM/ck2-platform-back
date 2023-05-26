@@ -35,6 +35,42 @@ class UsuariosController extends Controller
         return response($listedUsuarios,200);
     }
 
+    function listUsuario($id){
+        $listedUsuario = Usuarios::find($id);
+        if(!$listedUsuario){
+            return response(['message'=>'No se encontró el usuario'],404);
+        }
+        return response($listedUsuario,200);
+    }
+
+    function updateUsuario(Request $request, $id){
+        $usuario = Usuarios::find($id);
+
+        if(!$usuario){
+            return response(['message'=>'No se pudo guardar los cambios'],404);
+        }
+
+        $nombre = $request->get('nombre');
+        $apellido_paterno = $request->get('apellido_paterno');
+        $apellido_materno = $request->get('apellido_materno');
+        $username = $request->get('username');
+        $dni = $request->get('dni');
+        $password = $request->get('password');
+        $isAdmin = $request->get('isAdmin');
+
+        $usuario->update([
+            'nombre'=>$nombre,
+            'apellido_paterno'=>$apellido_paterno,
+            'apellido_materno'=>$apellido_materno,
+            'username'=>$username,
+            'dni'=>$dni,
+            'password'=>$password,
+            'isAdmin'=>$isAdmin
+        ]);
+
+        return response(['message'=>'Usuario actualizado'],201);
+    }
+
     public function destroyUsuarios($id){
         $user = Usuarios::find($id);
 
@@ -51,7 +87,8 @@ class UsuariosController extends Controller
         // 'apellido_paterno',
         // 'apellido_materno',
         // 'username',
+        // 'dni',
         // 'password',
-        // 'permiso'
+        // 'isAdmin'
     
 }
