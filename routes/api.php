@@ -26,6 +26,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 Route::prefix('/users')->group(function(){
     Route::post('/create',[UsuariosController::class,'createUsuarios']); 
+    Route::post('/login',[UsuariosController::class,'loginUsuarios']); 
     Route::get('/list',[UsuariosController::class,'listUsuarios']);
     Route::get('/list/{id}',[UsuariosController::class,'listUsuario']);
     Route::post('/update/{id}',[UsuariosController::class,'updateUsuario']);
