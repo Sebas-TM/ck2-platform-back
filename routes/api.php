@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\EmpleadosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,10 @@ Route::prefix('/users')->group(function(){
 
 /**
 * ==========================
-* ====     AREAS     ====
+* ====      EMPLEADOS     ====
 * ==========================
 */
+Route::prefix('/empleados')->group(function(){
+    Route::post('/create',[EmpleadosController::class,'createEmpleados']);
+    Route::get('/list',[EmpleadosController::class,'listEmpleados']);
+});
