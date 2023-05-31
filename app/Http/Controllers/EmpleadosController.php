@@ -43,4 +43,12 @@ class EmpleadosController extends Controller
         $listedEmpleados = Empleados::all();
         return response($listedEmpleados, 200);
     }
+
+    function listEmpleado($id){
+        $listedEmpleado = Empleados::find($id);
+        if(!$listedEmpleado){
+            return response(['message'=>'No se encontró el usuario'],404);
+        }
+        return response($listedEmpleado,200);
+    }
 }

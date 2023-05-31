@@ -44,6 +44,7 @@ class PersonalController extends Controller
         return response($listedPersonal, 200);
     }
 
+
     //      'nombre',
     //     'apellido_paterno',
     //     'apellido_materno',

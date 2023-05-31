@@ -39,7 +39,8 @@ Route::prefix('/users')->group(function(){
 * ====      EMPLEADOS     ====
 * ==========================
 */
-Route::prefix('/empleados')->group(function(){
+Route::prefix('/employees')->group(function(){
     Route::post('/create',[EmpleadosController::class,'createEmpleados']);
     Route::get('/list',[EmpleadosController::class,'listEmpleados']);
+    Route::get('/list/{id}',[EmpleadosController::class,'listEmpleado']);
 });
