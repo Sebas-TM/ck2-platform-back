@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\EmpleadosController;
+use App\Http\Controllers\AreasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,12 +32,12 @@ Route::prefix('/users')->group(function(){
     Route::get('/list',[UsuariosController::class,'listUsuarios']);
     Route::get('/list/{id}',[UsuariosController::class,'listUsuario']);
     Route::post('/update/{id}',[UsuariosController::class,'updateUsuario']);
-    Route::delete('/delete/{id}',[UsuariosController::class,'destroyUsuarios']);
+    Route::delete('/delete/{id}',[UsuariosController::class,'destroyUsuarios']); 
 });
 
 /**
 * ==========================
-* ====      EMPLEADOS     ====
+* ====     EMPLEADOS    ====
 * ==========================
 */
 Route::prefix('/employees')->group(function(){
@@ -45,4 +46,18 @@ Route::prefix('/employees')->group(function(){
     Route::get('/list/{id}',[EmpleadosController::class,'listEmpleado']);
     Route::post('update/{id}',[EmpleadosController::class,'updateEmpleado']);
     Route::delete('/delete/{id}',[EmpleadosController::class,'destroyEmpleados']);
+});
+
+/**
+* ==========================
+* ====      AREAS       ====
+* ==========================
+*/
+
+Route::prefix('/areas')->group(function(){
+    Route::post('/create',[AreasController::class,'createAreas']);
+    Route::get('/list',[AreasController::class,'listAreas']);
+    Route::get('/list/{id}',[AreasController::class,'listArea']);
+    Route::post('/update/{id}',[AreasController::class,'updateArea']);
+    Route::delete('/delete/{id}',[AreasController::class,'destroyAreas']);
 });
