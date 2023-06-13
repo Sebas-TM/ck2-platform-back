@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Usuarios;
 
 class UsuariosController extends Controller
@@ -19,36 +20,37 @@ class UsuariosController extends Controller
         $password = $request->get('password');
         $isAdmin = $request->get('isAdmin');
 
-        $md5Password = md5($password);
-
+        $encrypted_password = Hash::make($password);
         $createdUsuario = Usuarios::create([
             'nombre'=>$nombre,
             'apellido_paterno'=>$apellido_paterno,
             'apellido_materno'=>$apellido_materno,
             'dni'=>$dni,
             'username'=>$username,
-            'password'=>$md5Password,
+            'password'=>$encrypted_password,
             'isAdmin'=>$isAdmin
         ]);
         return response($createdUsuario, 201);
+    }  
+
+    function loginUsuarios(Request $request){
+        $credentials = $request->only('username', 'password');
+
+        $user = Usuarios::where('username',$credentials['username'])->first();
+
+        if(!$user || !Hash::check($credentials['password'], $user->password)){
+            return response()->json(['message'=>'Credenciales inválidas']);
+        }
+
+        return $user;
+
+
     }
 
     function listUsuarios(Request $request){
         $listedUsuarios = Usuarios::all();
         return response($listedUsuarios,200);
     }
-
-    // public function loginUsuarios(Request $request){
-    //     $credentials = $request->only('username','password');
-
-    //     $user = Usuarios::where('username', $credentials['email'])->first();
-
-    //     if ($user && Hash::check($credentials['password'], $user -> password)){
-    //         return response(['message'=>'Se validó correctamente'],200);
-    //     } else {
-    //         return response(['message'=>'No se validó correctamente'],404);
-    //     }
-    // }
 
     function listUsuario($id){
         $listedUsuario = Usuarios::find($id);
