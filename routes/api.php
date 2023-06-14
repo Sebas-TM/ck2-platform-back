@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\AreasController;
+use App\Http\Controllers\ImagenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,3 +62,6 @@ Route::prefix('/areas')->group(function(){
     Route::post('/update/{id}',[AreasController::class,'updateArea']);
     Route::delete('/delete/{id}',[AreasController::class,'destroyAreas']);
 });
+
+
+Route::post('/addImage',[ImagenController::class,'store']);
