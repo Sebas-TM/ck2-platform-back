@@ -39,7 +39,7 @@ class UsuariosController extends Controller
         $user = Usuarios::where('username',$credentials['username'])->first();
 
         if(!$user || !Hash::check($credentials['password'], $user->password)){
-            return response()->json(['message'=>'Credenciales inválidas']);
+            return 0;
         }
 
         return $user;
