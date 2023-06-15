@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\AreasController;
-use App\Http\Controllers\ImagenController;
+use App\Http\Controllers\ImagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,4 +64,4 @@ Route::prefix('/areas')->group(function(){
 });
 
 
-Route::post('/addImage',[ImagenController::class,'store']);
+Route::post('/addImage',[ImagesController::class,'store']);
