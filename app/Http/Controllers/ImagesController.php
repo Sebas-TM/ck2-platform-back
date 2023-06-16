@@ -18,11 +18,17 @@ class ImagesController extends Controller
             ]);
             $nombre = $request->get('nombre');
             $imagen = $request->file('imagen');
-            $imagen->store('public/images');
+
+            $nombreImagen = $nombre . '.' . $imagen->getClientOriginalExtension();
+
+            $imagen->storeAs('public/images', $nombreImagen);
+
+            $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen); 
+
 
             $createdImagen = Images::create([
-                'nombre'=>$nombre,
-                'imagen'=>$imagen
+                'nombre' => $nombre,
+                'imagen' => $rutaImagen
             ]);
             return response($createdImagen, 201);
         } catch (\Throwable $error) {
@@ -43,5 +49,10 @@ class ImagesController extends Controller
         // $user->save();
 
         // return response()->json(['message' => 'Usuario registrado correctamente'], 201);
+    }
+
+    function listImages(){
+        $listedImages = Images::all();
+        return response($listedImages,200);
     }
 }

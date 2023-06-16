@@ -19,6 +19,7 @@ class CreateUsuariosTable extends Migration
             $table->string('apellido_paterno',30);
             $table->string('apellido_materno',30);
             $table->integer('dni');
+            $table->string('imagen',255);
             $table->string('username',30);
             $table->string('password',80);
             $table->integer('isAdmin');

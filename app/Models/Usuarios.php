@@ -15,6 +15,7 @@ class Usuarios extends Model
         'apellido_paterno',
         'apellido_materno',
         'dni',
+        'imagen',
         'username',
         'password',
         'isAdmin'

@@ -65,3 +65,4 @@ Route::prefix('/areas')->group(function(){
 
 
 Route::post('/addImage',[ImagesController::class,'store']);
+Route::get('/listImage',[ImagesController::class,'listImages']);

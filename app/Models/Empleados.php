@@ -13,13 +13,16 @@ class Empleados extends Model
         'nombre',
         'apellido_paterno',
         'apellido_materno',
+        'imagen',
         'estado',
         'dni',
         'correo',
-        'telefono',
+        'celular',
+        'nombre_contacto',
+        'numero_contacto',
+        'relacion_contacto',
         'area',
-        'sala',
-        'cargo',
-        'jefe_directo'
+        'puesto',
+        'jefe_inmediato'
     ];
 }

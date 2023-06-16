@@ -18,14 +18,17 @@ class CreateEmpleadosTable extends Migration
             $table->string('nombre',30);
             $table->string('apellido_paterno',30);
             $table->string('apellido_materno',30);
+            $table->string('imagen',255);
             $table->string('estado',30);
-            $table->integer('dni');
+            $table->integer('dni')->unique();
             $table->string('correo',80);
-            $table->integer('telefono');
+            $table->integer('celular');
+            $table->string('nombre_contacto',80)->nullable();
+            $table->integer('numero_contacto')->nullable();
+            $table->string('relacion_contacto',30)->nullable();
             $table->string('area',30);
-            $table->integer('sala');
-            $table->string('cargo',30);
-            $table->string('jefe_directo',30);
+            $table->string('puesto',30);
+            $table->string('jefe_inmediato',30);
         });
     }
 
