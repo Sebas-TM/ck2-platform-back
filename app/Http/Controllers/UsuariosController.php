@@ -24,7 +24,7 @@ class UsuariosController extends Controller
 
         $nombreImagen = $username . '.' . $imagen->getClientOriginalExtension();
         $imagen->storeAs('public/images', $nombreImagen);
-        $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+        $rutaImagen = $imagen->storeAs('public/images', $nombreImagen);
 
         $encrypted_password = Hash::make($password);
         $createdUsuario = Usuarios::create([

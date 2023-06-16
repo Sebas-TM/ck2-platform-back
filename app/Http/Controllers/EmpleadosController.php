@@ -33,7 +33,7 @@ class EmpleadosController extends Controller
 
         $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
         $imagen->storeAs('public/images', $nombreImagen);
-        $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+        $rutaImagen = $imagen->storeAs('public/images', $nombreImagen);
 
         $createdEmpleados = Empleados::create([
             'nombre' => $nombre,
@@ -111,7 +111,7 @@ class EmpleadosController extends Controller
 
         $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
         $imagen->storeAs('public/images', $nombreImagen);
-        $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+        $rutaImagen = $imagen->storeAs('public/images', $nombreImagen);
 
         $empleado->update([
             'nombre' => $nombre,
