@@ -16,9 +16,23 @@ class Cors
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request)
-            ->header("Acces-Control-Allow-Origin", "*")
-            ->header("Acces-Control-Allow-Methods","GET, POST, PUT, DELETE, PATCH, OPTIONS")
-            ->header("Access-Control-Allow-Headers","Content-Type, Authorization");
+        $headers = [
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE',
+            'Access-Control-Allow-Headers' => 'Content-Type, Authorization',
+            'Access-Control-Allow-Credentials' => 'true',
+        ];
+
+        if ($request->isMethod('OPTIONS')) {
+            return response()->json([], 200, $headers);
+        }
+
+        $response = $next($request);
+
+        foreach ($headers as $key => $value) {
+            $response->header($key, $value);
+        }
+
+        return $response;
     }
 }

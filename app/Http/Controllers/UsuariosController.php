@@ -7,37 +7,51 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Usuarios;
+use Throwable;
 
 class UsuariosController extends Controller
 {
     //
     function createUsuarios(Request $request)
     {
-        $nombre = $request->get('nombre');
-        $apellido_paterno = $request->get('apellido_paterno');
-        $apellido_materno = $request->get('apellido_materno');
-        $dni = $request->get('dni');
-        $imagen = $request->file('imagen');
-        $username = $request->get('username');
-        $password = $request->get('password');
-        $isAdmin = $request->get('isAdmin');
 
-        $nombreImagen = $username . '.' . $imagen->getClientOriginalExtension();
-        $imagen->storeAs('public/images', $nombreImagen);
-        $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+        try {
+            $request->validate([
+                'imagen' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
 
-        $encrypted_password = Hash::make($password);
-        $createdUsuario = Usuarios::create([
-            'nombre' => $nombre,
-            'apellido_paterno' => $apellido_paterno,
-            'apellido_materno' => $apellido_materno,
-            'dni' => $dni,
-            'imagen' => $rutaImagen,
-            'username' => $username,
-            'password' => $encrypted_password,
-            'isAdmin' => $isAdmin
-        ]);
-        return response($createdUsuario, 201);
+            $nombre = $request->get('nombre');
+            $apellido_paterno = $request->get('apellido_paterno');
+            $apellido_materno = $request->get('apellido_materno');
+            $dni = $request->get('dni');
+            $imagen = $request->file('imagen');
+            $username = $request->get('username');
+            $password = $request->get('password');
+            $isAdmin = $request->get('isAdmin');
+
+            if (!$request->hasFile('imagen')) {
+                return response(['message' => $imagen], 500);
+            } else {
+                $nombreImagen = $username . '.' . $imagen->getClientOriginalExtension();
+                $imagen->storeAs('public/images', $nombreImagen);
+                $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+
+                $encrypted_password = Hash::make($password);
+                $createdUsuario = Usuarios::create([
+                    'nombre' => $nombre,
+                    'apellido_paterno' => $apellido_paterno,
+                    'apellido_materno' => $apellido_materno,
+                    'dni' => $dni,
+                    'imagen' => $rutaImagen,
+                    'username' => $username,
+                    'password' => $encrypted_password,
+                    'isAdmin' => $isAdmin
+                ]);
+                return response($createdUsuario, 201);
+            }
+        }  catch (\Throwable $error) {
+            return $error->getMessage();
+        }
     }
 
     function loginUsuarios(Request $request)
