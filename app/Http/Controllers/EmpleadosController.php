@@ -109,27 +109,50 @@ class EmpleadosController extends Controller
         $puesto = $request->get('puesto');
         $jefe_inmediato = $request->get('jefe_inmediato');
 
-        $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
-        $imagen->storeAs('public/images', $nombreImagen);
-        $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
 
-        $empleado->update([
-            'nombre' => $nombre,
-            'apellido_paterno' => $apellido_paterno,
-            'apellido_materno' => $apellido_materno,
-            'imagen' => $rutaImagen,
-            'estado' => $estado,
-            'dni' => $dni,
-            'correo' => $correo,
-            'celular' => $celular,
-            'nombre_contacto' => $nombre_contacto,
-            'numero_contacto' => $numero_contacto,
-            'relacion_contacto' => $relacion_contacto,
-            'area' => $area,
-            'puesto' => $puesto,
-            'jefe_inmediato' => $jefe_inmediato
-        ]);
 
-        return response(['message' => 'Empleado actualizado'], 201);
+        if (!$request->hasFile('imagen')) {
+            $empleado->update([
+                'nombre' => $nombre,
+                'apellido_paterno' => $apellido_paterno,
+                'apellido_materno' => $apellido_materno,
+                'estado' => $estado,
+                'dni' => $dni,
+                'correo' => $correo,
+                'celular' => $celular,
+                'nombre_contacto' => $nombre_contacto,
+                'numero_contacto' => $numero_contacto,
+                'relacion_contacto' => $relacion_contacto,
+                'area' => $area,
+                'puesto' => $puesto,
+                'jefe_inmediato' => $jefe_inmediato
+            ]);
+
+            return response(['message' => 'Empleado actualizado'], 201);
+        } else {
+
+            $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
+            $imagen->storeAs('public/images', $nombreImagen);
+            $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+            
+            $empleado->update([
+                'nombre' => $nombre,
+                'apellido_paterno' => $apellido_paterno,
+                'apellido_materno' => $apellido_materno,
+                'imagen' => $rutaImagen,
+                'estado' => $estado,
+                'dni' => $dni,
+                'correo' => $correo,
+                'celular' => $celular,
+                'nombre_contacto' => $nombre_contacto,
+                'numero_contacto' => $numero_contacto,
+                'relacion_contacto' => $relacion_contacto,
+                'area' => $area,
+                'puesto' => $puesto,
+                'jefe_inmediato' => $jefe_inmediato
+            ]);
+
+            return response(['message' => 'Empleado actualizado'], 201);
+        }
     }
 }

@@ -18,7 +18,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('nombre',30);
             $table->string('apellido_paterno',30);
             $table->string('apellido_materno',30);
-            $table->string('imagen',255);
+            $table->string('imagen',255)->nullable();
             $table->string('estado',30);
             $table->integer('dni')->unique();
             $table->string('correo',80);

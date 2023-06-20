@@ -49,7 +49,7 @@ class UsuariosController extends Controller
                 ]);
                 return response($createdUsuario, 201);
             }
-        }  catch (\Throwable $error) {
+        } catch (\Throwable $error) {
             return $error->getMessage();
         }
     }
@@ -93,22 +93,71 @@ class UsuariosController extends Controller
         $nombre = $request->get('nombre');
         $apellido_paterno = $request->get('apellido_paterno');
         $apellido_materno = $request->get('apellido_materno');
-        $username = $request->get('username');
         $dni = $request->get('dni');
+        $imagen = $request->file('imagen');
+        $username = $request->get('username');
         $password = $request->get('password');
         $isAdmin = $request->get('isAdmin');
 
-        $usuario->update([
-            'nombre' => $nombre,
-            'apellido_paterno' => $apellido_paterno,
-            'apellido_materno' => $apellido_materno,
-            'username' => $username,
-            'dni' => $dni,
-            'password' => $password,
-            'isAdmin' => $isAdmin
-        ]);
+        if ($password == null && !$request->hasFile('imagen')) {
+            $usuario->update([
+                'nombre' => $nombre,
+                'apellido_paterno' => $apellido_paterno,
+                'apellido_materno' => $apellido_materno,
+                'dni' => $dni,
+                'username' => $username,
+                'isAdmin' => $isAdmin
+            ]);
 
-        return response(['message' => 'Usuario actualizado'], 201);
+            return response(['message' => 'Usuario actualizado'], 201);
+        } else if ($password != null && !$request->hasFile('imagen')) {
+            $encrypted_password = Hash::make($password);
+
+            $usuario->update([
+                'nombre' => $nombre,
+                'apellido_paterno' => $apellido_paterno,
+                'apellido_materno' => $apellido_materno,
+                'dni' => $dni,
+                'username' => $username,
+                'password' => $encrypted_password,
+                'isAdmin' => $isAdmin
+            ]);
+
+            return response(['message' => 'Usuario actualizado'], 201);
+        } else if ($password == null && $request->hasFile('imagen')) {
+
+            $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
+            $imagen->storeAs('public/images', $nombreImagen);
+            $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+
+            $usuario->update([
+                'nombre' => $nombre,
+                'apellido_paterno' => $apellido_paterno,
+                'apellido_materno' => $apellido_materno,
+                'dni' => $dni,
+                'imagen' => $rutaImagen,
+                'username' => $username,
+                'isAdmin' => $isAdmin
+            ]);
+        } else {
+            $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
+            $imagen->storeAs('public/images', $nombreImagen);
+            $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+
+            $encrypted_password = Hash::make($password);
+
+
+            $usuario->update([
+                'nombre' => $nombre,
+                'apellido_paterno' => $apellido_paterno,
+                'apellido_materno' => $apellido_materno,
+                'dni' => $dni,
+                'imagen' => $rutaImagen,
+                'username' => $username,
+                'password' => $encrypted_password,
+                'isAdmin' => $isAdmin
+            ]);
+        }
     }
 
     public function destroyUsuarios($id)
