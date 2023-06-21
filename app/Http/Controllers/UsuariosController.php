@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use App\Models\Usuarios;
 use Throwable;
 
@@ -20,6 +21,25 @@ class UsuariosController extends Controller
                 'imagen' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
+            $validator = Validator::make($request->all(),[
+                'dni' => 'unique:usuarios',
+                'username' => 'unique:usuarios'
+            ]);
+
+            $errors = $validator->errors();
+            if($validator->fails()){
+                if($errors->has('dni') && $errors->has('username')){
+                    $errorMessage = 'El DNI y el nombre de usuario ya han sido registrados';
+                } elseif($errors->has('dni')){
+                    $errorMessage = 'El DNI ya ha sido registrado';
+                } elseif($errors->has('username')){
+                    $errorMessage = 'El nombre de usuario ya ha sido registrado';
+                }    
+                
+                return response(['message' => $errorMessage],422);
+            }
+            
+
             $nombre = $request->get('nombre');
             $apellido_paterno = $request->get('apellido_paterno');
             $apellido_materno = $request->get('apellido_materno');
@@ -30,7 +50,18 @@ class UsuariosController extends Controller
             $isAdmin = $request->get('isAdmin');
 
             if (!$request->hasFile('imagen')) {
-                return response(['message' => $imagen], 500);
+                $encrypted_password = Hash::make($password);
+                $createdUsuario = Usuarios::create([
+                    'nombre' => $nombre,
+                    'apellido_paterno' => $apellido_paterno,
+                    'apellido_materno' => $apellido_materno,
+                    'dni' => $dni,
+                    'username' => $username,
+                    'password' => $encrypted_password,
+                    'isAdmin' => $isAdmin
+                ]);
+                return response($createdUsuario, 201);
+
             } else {
                 $nombreImagen = $username . '.' . $imagen->getClientOriginalExtension();
                 $imagen->storeAs('public/images', $nombreImagen);
@@ -88,6 +119,32 @@ class UsuariosController extends Controller
 
         if (!$usuario) {
             return response(['message' => 'No se pudo guardar los cambios'], 404);
+        }
+
+        $request->validate([
+            'imagen' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $validator = Validator::make($request->all(),[
+            'dni' => [
+                Rule::unique('usuarios')->ignore($id),
+            ],
+            'username' => [
+                Rule::unique('usuarios')->ignore($id),
+            ]
+        ]);
+
+        $errors = $validator->errors();
+        if($validator->failed()){
+            if($errors->has('dni') && $errors->has('username')){
+                $errorMessage = 'El DNI y el nombre de usuario ya han sido registrados';
+            } elseif($errors->has('dni')){
+                $errorMessage = 'El DNI ya ha sido registrado';
+            } elseif($errors->has('username')){
+                $errorMessage = 'El nombre de usuario ya ha sido registrado';
+            }    
+            
+            return response(['message' => $errorMessage],422);
         }
 
         $nombre = $request->get('nombre');

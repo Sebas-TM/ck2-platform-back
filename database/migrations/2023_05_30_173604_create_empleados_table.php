@@ -21,13 +21,13 @@ class CreateEmpleadosTable extends Migration
             $table->string('imagen',255)->nullable();
             $table->string('estado',30);
             $table->integer('dni')->unique();
-            $table->string('correo',80);
+            $table->string('correo',255);
             $table->integer('celular');
-            $table->string('nombre_contacto',80)->nullable();
+            $table->string('nombre_contacto',255)->nullable();
             $table->integer('numero_contacto')->nullable();
             $table->string('relacion_contacto',30)->nullable();
             $table->string('area',30);
-            $table->string('puesto',30);
+            $table->string('puesto',80);
             $table->string('jefe_inmediato',30);
         });
     }
