@@ -15,7 +15,7 @@ class EmpleadosController extends Controller
         
             try{
                 $request->validate([
-                    'imagen' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                    'imagen' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
                 ]);
                 
                 $validator = Validator::make($request->all(),[
@@ -129,7 +129,7 @@ class EmpleadosController extends Controller
         }
 
         $request->validate([
-            'imagen' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'imagen' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         $validator = Validator::make($request->all(),[

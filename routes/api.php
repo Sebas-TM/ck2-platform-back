@@ -47,6 +47,7 @@ Route::prefix('/employees')->group(function(){
     Route::get('/list/{id}',[EmpleadosController::class,'listEmpleado']);
     Route::post('update/{id}',[EmpleadosController::class,'updateEmpleado']);
     Route::delete('/delete/{id}',[EmpleadosController::class,'destroyEmpleados']);
+    Route::get('/create-storage-link',[UsuariosController::class,'createStorageLink']);
 });
 
 /**

@@ -18,7 +18,7 @@ class Usuarios extends Model
         'imagen',
         'username',
         'password',
-        'isAdmin'
+        'rol'
     ];
 
     // public function setPasswordAttribute($value){

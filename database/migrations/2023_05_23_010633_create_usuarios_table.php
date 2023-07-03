@@ -22,7 +22,7 @@ class CreateUsuariosTable extends Migration
             $table->string('imagen',255)->nullable();
             $table->string('username',30)->unique();
             $table->string('password',80);
-            $table->integer('isAdmin');
+            $table->integer('rol');
         });
     }
 

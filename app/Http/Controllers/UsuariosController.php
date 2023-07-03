@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Usuarios;
+use Illuminate\Support\Facades\Artisan;
 use Throwable;
 
 class UsuariosController extends Controller
@@ -18,7 +19,7 @@ class UsuariosController extends Controller
 
         try {
             $request->validate([
-                'imagen' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'imagen' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             ]);
 
             $validator = Validator::make($request->all(),[
@@ -47,7 +48,7 @@ class UsuariosController extends Controller
             $imagen = $request->file('imagen');
             $username = $request->get('username');
             $password = $request->get('password');
-            $isAdmin = $request->get('isAdmin');
+            $rol = $request->get('rol');
 
             if (!$request->hasFile('imagen')) {
                 $encrypted_password = Hash::make($password);
@@ -58,7 +59,7 @@ class UsuariosController extends Controller
                     'dni' => $dni,
                     'username' => $username,
                     'password' => $encrypted_password,
-                    'isAdmin' => $isAdmin
+                    'rol' => $rol
                 ]);
                 return response($createdUsuario, 201);
 
@@ -76,7 +77,7 @@ class UsuariosController extends Controller
                     'imagen' => $rutaImagen,
                     'username' => $username,
                     'password' => $encrypted_password,
-                    'isAdmin' => $isAdmin
+                    'rol' => $rol
                 ]);
                 return response($createdUsuario, 201);
             }
@@ -122,7 +123,7 @@ class UsuariosController extends Controller
         }
 
         $request->validate([
-            'imagen' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'imagen' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         $validator = Validator::make($request->all(),[
@@ -154,7 +155,7 @@ class UsuariosController extends Controller
         $imagen = $request->file('imagen');
         $username = $request->get('username');
         $password = $request->get('password');
-        $isAdmin = $request->get('isAdmin');
+        $rol = $request->get('rol');
 
         if ($password == null && !$request->hasFile('imagen')) {
             $usuario->update([
@@ -163,7 +164,7 @@ class UsuariosController extends Controller
                 'apellido_materno' => $apellido_materno,
                 'dni' => $dni,
                 'username' => $username,
-                'isAdmin' => $isAdmin
+                'rol' => $rol
             ]);
 
             return response(['message' => 'Usuario actualizado'], 201);
@@ -177,13 +178,13 @@ class UsuariosController extends Controller
                 'dni' => $dni,
                 'username' => $username,
                 'password' => $encrypted_password,
-                'isAdmin' => $isAdmin
+                'rol' => $rol
             ]);
 
             return response(['message' => 'Usuario actualizado'], 201);
         } else if ($password == null && $request->hasFile('imagen')) {
 
-            $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
+            $nombreImagen = $username . '.' . $imagen->getClientOriginalExtension();
             $imagen->storeAs('public/images', $nombreImagen);
             $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
 
@@ -194,7 +195,7 @@ class UsuariosController extends Controller
                 'dni' => $dni,
                 'imagen' => $rutaImagen,
                 'username' => $username,
-                'isAdmin' => $isAdmin
+                'rol' => $rol
             ]);
         } else {
             $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
@@ -212,7 +213,7 @@ class UsuariosController extends Controller
                 'imagen' => $rutaImagen,
                 'username' => $username,
                 'password' => $encrypted_password,
-                'isAdmin' => $isAdmin
+                'rol' => $rol
             ]);
         }
     }
@@ -228,13 +229,16 @@ class UsuariosController extends Controller
         $user->delete();
         return response('Usuario eliminado exitosamente');
     }
-
+    public function createStorageLink(){
+        Artisan::call('storage:link');
+        return 'Enlace simbolico creado exitosamente.';
+    }
     // 'nombre',
     // 'apellido_paterno',
     // 'apellido_materno',
     // 'username',
     // 'dni',
     // 'password',
-    // 'isAdmin'
+    // 'rol'
 
 }

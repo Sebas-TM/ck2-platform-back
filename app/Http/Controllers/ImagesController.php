@@ -13,7 +13,7 @@ class ImagesController extends Controller
         try {
             $request->validate([
                 'nombre' => 'required',
-                'imagen' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'imagen' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
 
             ]);
             $nombre = $request->get('nombre');
