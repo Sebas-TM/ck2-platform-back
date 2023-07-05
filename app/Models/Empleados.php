@@ -23,6 +23,9 @@ class Empleados extends Model
         'relacion_contacto',
         'area',
         'puesto',
-        'jefe_inmediato'
+        'jefe_inmediato',
+        'fecha_certificacion',
+        'grupo',
+        'sede'
     ];
 }

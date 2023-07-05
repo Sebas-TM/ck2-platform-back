@@ -42,6 +42,9 @@ class EmpleadosController extends Controller
                 $area = $request->get('area');
                 $puesto = $request->get('puesto');
                 $jefe_inmediato = $request->get('jefe_inmediato');
+                $fecha_certificacion = $request->get('fecha_certificacion');
+                $grupo = $request->get('grupo');
+                $sede = $request->get('sede');
         
                 if(!$request->hasFile('imagen')){
                     $createdEmpleados = Empleados::create([
@@ -57,7 +60,10 @@ class EmpleadosController extends Controller
                         'relacion_contacto' => $relacion_contacto,
                         'area' => $area,
                         'puesto' => $puesto,
-                        'jefe_inmediato' => $jefe_inmediato
+                        'jefe_inmediato' => $jefe_inmediato,
+                        'fecha_certificación' => $fecha_certificacion,
+                        'grupo' => $grupo,
+                        'sede' => $sede
                     ]);
             
                     return response($createdEmpleados, 201);
@@ -80,7 +86,10 @@ class EmpleadosController extends Controller
                         'relacion_contacto' => $relacion_contacto,
                         'area' => $area,
                         'puesto' => $puesto,
-                        'jefe_inmediato' => $jefe_inmediato
+                        'jefe_inmediato' => $jefe_inmediato,
+                        'fecha_certificación' => $fecha_certificacion,
+                        'grupo' => $grupo,
+                        'sede' => $sede
                     ]);
         
                     return response($createdEmpleados, 201);
@@ -156,6 +165,9 @@ class EmpleadosController extends Controller
         $area = $request->get('area');
         $puesto = $request->get('puesto');
         $jefe_inmediato = $request->get('jefe_inmediato');
+        $fecha_certificacion = $request->get('fecha_certificacion');
+        $grupo = $request->get('grupo');
+        $sede = $request->get('sede');
 
 
 
@@ -173,7 +185,10 @@ class EmpleadosController extends Controller
                 'relacion_contacto' => $relacion_contacto,
                 'area' => $area,
                 'puesto' => $puesto,
-                'jefe_inmediato' => $jefe_inmediato
+                'jefe_inmediato' => $jefe_inmediato,
+                'fecha_certificación' => $fecha_certificacion,
+                'grupo' => $grupo,
+                'sede' => $sede
             ]);
 
             return response(['message' => 'Empleado actualizado'], 201);
@@ -197,7 +212,10 @@ class EmpleadosController extends Controller
                 'relacion_contacto' => $relacion_contacto,
                 'area' => $area,
                 'puesto' => $puesto,
-                'jefe_inmediato' => $jefe_inmediato
+                'jefe_inmediato' => $jefe_inmediato,
+                'fecha_certificación' => $fecha_certificacion,
+                'grupo' => $grupo,
+                'sede' => $sede
             ]);
 
             return response(['message' => 'Empleado actualizado'], 201);

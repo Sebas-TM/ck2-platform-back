@@ -29,6 +29,9 @@ class CreateEmpleadosTable extends Migration
             $table->string('area',30);
             $table->string('puesto',80);
             $table->string('jefe_inmediato',30);
+            $table->string('fecha_certificacion',30)->nullable();
+            $table->string('grupo',30)->nullable();
+            $table->string('sede',30)->nullable();
         });
     }
 

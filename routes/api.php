@@ -6,6 +6,7 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\AreasController;
 use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\PuestosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,19 @@ Route::prefix('/areas')->group(function(){
     Route::delete('/delete/{id}',[AreasController::class,'destroyAreas']);
 });
 
+/**
+* ==========================
+* ====     PUESTOS      ====
+* ==========================
+*/
+
+Route::prefix('/positions')->group(function(){
+    Route::post('/create',[PuestosController::class, 'createPuestos']);
+    Route::get('/list',[PuestosController::class, 'listPuestos']);
+    Route::get('/list/{id}',[PuestosController::class, 'listPuesto']);
+    Route::post('/update/{id}',[PuestosController::class, 'updatePuesto']);
+    Route::delete('/delete/{id}',[PuestosController::class, 'destroyPuesto']);
+});
 
 Route::post('/addImage',[ImagesController::class,'store']);
 Route::get('/listImage',[ImagesController::class,'listImages']);
