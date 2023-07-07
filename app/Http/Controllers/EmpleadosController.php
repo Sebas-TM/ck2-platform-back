@@ -104,8 +104,16 @@ class EmpleadosController extends Controller
 
     function listEmpleados(Request $request)
     {
-        $listedEmpleados = Empleados::all();
-        return response($listedEmpleados, 200);
+        $listedEmpleados = Empleados::orderBy('id', 'desc')->paginate(10);
+        return response()->json([
+        'meta' => [
+            'current_page' => $listedEmpleados->currentPage(),
+            'last_page' => $listedEmpleados->lastPage(),
+            'per_page' => $listedEmpleados->perPage(),
+            'total' => $listedEmpleados->total()
+        ],
+        'data' => $listedEmpleados->items()
+    ]);      
     }
 
     function listEmpleado($id)
