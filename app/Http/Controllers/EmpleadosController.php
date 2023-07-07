@@ -61,7 +61,7 @@ class EmpleadosController extends Controller
                         'area' => $area,
                         'puesto' => $puesto,
                         'jefe_inmediato' => $jefe_inmediato,
-                        'fecha_certificación' => $fecha_certificacion,
+                        'fecha_certificacion' => $fecha_certificacion,
                         'grupo' => $grupo,
                         'sede' => $sede
                     ]);
@@ -87,7 +87,7 @@ class EmpleadosController extends Controller
                         'area' => $area,
                         'puesto' => $puesto,
                         'jefe_inmediato' => $jefe_inmediato,
-                        'fecha_certificación' => $fecha_certificacion,
+                        'fecha_certificacion' => $fecha_certificacion,
                         'grupo' => $grupo,
                         'sede' => $sede
                     ]);
@@ -186,7 +186,7 @@ class EmpleadosController extends Controller
                 'area' => $area,
                 'puesto' => $puesto,
                 'jefe_inmediato' => $jefe_inmediato,
-                'fecha_certificación' => $fecha_certificacion,
+                'fecha_certificacion' => $fecha_certificacion,
                 'grupo' => $grupo,
                 'sede' => $sede
             ]);
@@ -213,7 +213,7 @@ class EmpleadosController extends Controller
                 'area' => $area,
                 'puesto' => $puesto,
                 'jefe_inmediato' => $jefe_inmediato,
-                'fecha_certificación' => $fecha_certificacion,
+                'fecha_certificacion' => $fecha_certificacion,
                 'grupo' => $grupo,
                 'sede' => $sede
             ]);
