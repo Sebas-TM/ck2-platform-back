@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Empleados;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class EmpleadosController extends Controller
@@ -73,6 +75,12 @@ class EmpleadosController extends Controller
                 $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
                 $imagen->storeAs('public/images', $nombreImagen);
                 $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+
+                $resizedImage = Image::make($rutaImagen)->resize(150, null, function($constraint){
+                    $constraint->aspectRatio();
+                });
+
+                $resizedImage->save($rutaImagen);
 
                 $createdEmpleados = Empleados::create([
                     'nombre' => $nombre,
@@ -228,6 +236,12 @@ class EmpleadosController extends Controller
             $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
             $imagen->storeAs('public/images', $nombreImagen);
             $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+
+            $resizedImage = Image::make($rutaImagen)->resize(150, null, function($constraint){
+                $constraint->aspectRatio();
+            });
+
+            $resizedImage->save($rutaImagen);
 
             $empleado->update([
                 'nombre' => $nombre,

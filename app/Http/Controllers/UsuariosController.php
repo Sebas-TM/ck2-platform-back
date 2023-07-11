@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Usuarios;
 use Illuminate\Support\Facades\Artisan;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class UsuariosController extends Controller
@@ -67,6 +69,12 @@ class UsuariosController extends Controller
                 $nombreImagen = $username . '.' . $imagen->getClientOriginalExtension();
                 $imagen->storeAs('public/images', $nombreImagen);
                 $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+
+                $resizedImage = Image::make($rutaImagen)->resize(150, null, function($constraint){
+                    $constraint->aspectRatio();
+                });
+
+                $resizedImage->save($rutaImagen);
 
                 $encrypted_password = Hash::make($password);
                 $createdUsuario = Usuarios::create([
@@ -188,6 +196,13 @@ class UsuariosController extends Controller
             $imagen->storeAs('public/images', $nombreImagen);
             $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
 
+            $resizedImage = Image::make($rutaImagen)->resize(150, null, function($constraint){
+                $constraint->aspectRatio();
+            });
+
+            $resizedImage->save($rutaImagen);
+
+
             $usuario->update([
                 'nombre' => $nombre,
                 'apellido_paterno' => $apellido_paterno,
@@ -201,6 +216,12 @@ class UsuariosController extends Controller
             $nombreImagen = $dni . '.' . $imagen->getClientOriginalExtension();
             $imagen->storeAs('public/images', $nombreImagen);
             $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
+
+            $resizedImage = Image::make($rutaImagen)->resize(150, null, function($constraint){
+                $constraint->aspectRatio();
+            });
+
+            $resizedImage->save($rutaImagen);
 
             $encrypted_password = Hash::make($password);
 
