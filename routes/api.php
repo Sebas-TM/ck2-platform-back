@@ -45,6 +45,7 @@ Route::prefix('/users')->group(function(){
 */
 Route::prefix('/employees')->group(function(){
     Route::post('/create',[EmpleadosController::class,'createEmpleados']);
+    Route::get('/listAll',[EmpleadosController::class,'listAllEmpleados']);
     Route::get('/list',[EmpleadosController::class,'listEmpleados']);
     Route::get('/list/{id}',[EmpleadosController::class,'listEmpleado']);
     Route::post('update/{id}',[EmpleadosController::class,'updateEmpleado']);

@@ -76,7 +76,7 @@ class EmpleadosController extends Controller
                 $imagen->storeAs('public/images', $nombreImagen);
                 $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
 
-                $resizedImage = Image::make($rutaImagen)->resize(150, null, function($constraint){
+                $resizedImage = Image::make($rutaImagen)->resize(150, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
 
@@ -130,7 +130,11 @@ class EmpleadosController extends Controller
         }
     }
 
-
+    function listAllEmpleados(Request $request)
+    {
+        $listedAllEmpleados = Empleados::all();
+        return response($listedAllEmpleados, 200);
+    }
 
 
     function listEmpleados(Request $request)
@@ -237,7 +241,7 @@ class EmpleadosController extends Controller
             $imagen->storeAs('public/images', $nombreImagen);
             $rutaImagen = $imagen->storeAs('storage/images', $nombreImagen);
 
-            $resizedImage = Image::make($rutaImagen)->resize(150, null, function($constraint){
+            $resizedImage = Image::make($rutaImagen)->resize(150, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
 
